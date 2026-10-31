@@ -1,2 +1,4 @@
-# Service-
-It's an app that connects people offering services. It's an app that connects people offering services. 
+ ## Membre 3 - Comptes utilisateurs
+- Inscription et connexion (Email & Google Firebase)
+- Profils clients et artisans (statut, tarifs, compétences, upload de photo)
+- Validation dynamique des formulaires et police Manrope

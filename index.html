@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Service Artisans — Trouvez le bon professionnel près de chez vous</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="CSS/auth.css">
+</head>
+<body class="page-accueil">
+
+  <!-- Barre de navigation -->
+  <nav class="nav-principale">
+    <a href="index.html" class="nav-marque">
+      <span class="marque" style="margin-bottom:0;">
+        <span class="point"></span>
+        Service Artisans
+      </span>
+    </a>
+    <div class="nav-actions" id="navActions">
+      <!-- Rempli dynamiquement selon l'état de connexion -->
+    </div>
+  </nav>
+
+  <!-- Contenu principal -->
+  <div class="conteneur-page">
+    <header class="hero-accueil">
+      <h1>Trouvez un artisan qualifié et disponible près de chez vous</h1>
+      <p>Coiffure, plomberie, mécanique, maçonnerie, électricité... Consultez les profils certifiés, comparez les avis et contactez un professionnel en toute confiance.</p>
+
+      <!-- Barre de recherche multicritère -->
+      <div class="barre-recherche-accueil">
+        <input type="text" id="filtreRecherche" placeholder="Rechercher par mot-clé ou nom...">
+        <select id="filtreMetier">
+          <option value="">Tous les métiers</option>
+          <option value="coiffure">Coiffure & Esthétique</option>
+          <option value="plomberie">Plomberie & Sanitaire</option>
+          <option value="mecanique">Mécanique Auto & Moto</option>
+          <option value="maconnerie">Maçonnerie & BTP</option>
+          <option value="electricite">Électricité générale</option>
+          <option value="menuiserie">Menuiserie & Bois</option>
+        </select>
+        <button class="bouton" id="btnFiltrer" type="button">Rechercher</button>
+      </div>
+    </header>
+
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:40px;">
+      <h2>Artisans disponibles à proximité</h2>
+      <span id="compteurArtisans" style="font-size:0.85rem; color:var(--texte-doux); font-weight:600;">0 professionnels</span>
+    </div>
+
+    <!-- Grille des artisans -->
+    <div class="grille-artisans" id="grilleArtisans">
+      <!-- Cartes injectées en JavaScript -->
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script>
+    const LABELS_METIERS = {
+      coiffure: "Coiffure & Esthétique",
+      plomberie: "Plomberie & Sanitaire",
+      mecanique: "Mécanique Auto & Moto",
+      maconnerie: "Maçonnerie & BTP",
+      electricite: "Électricité",
+      menuiserie: "Menuiserie",
+      autre: "Artisanat"
+    };
+
+    // Artisans de démonstration réalistes pour que le site soit vivant dès l'ouverture
+    const ARTISANS_DEMO = [
+      {
+        id: "demo-1",
+        role: "professionnel",
+        prenom: "Koffi",
+        nom: "Agbodjan",
+        metier: "plomberie",
+        ville: "Cotonou (Akpakpa)",
+        tarifHoraire: 5000,
+        disponible: true,
+        noteMoyenne: 4.9,
+        nombreAvis: 24,
+        bio: "Plombier qualifié depuis 8 ans. Dépannage urgent d'infiltrations, pose de sanitaires, chauffe-eau et canalisations."
+      },
+      {
+        id: "demo-2",
+        role: "professionnel",
+        prenom: "Amina",
+        nom: "Soglo",
+        metier: "coiffure",
+        ville: "Cotonou (Haie Vive)",
+        tarifHoraire: 4000,
+        disponible: true,
+        noteMoyenne: 4.8,
+        nombreAvis: 31,
+        bio: "Coiffeuse visagiste & soins capillaires à domicile ou en salon. Tresses africaines modernes, tissages et coupes homme/femme."
+      },
+      {
+        id: "demo-3",
+        role: "professionnel",
+        prenom: "Fidèle",
+        nom: "Hounnou",
+        metier: "mecanique",
+        ville: "Abomey-Calavi",
+        tarifHoraire: 7500,
+        disponible: true,
+        noteMoyenne: 4.7,
+        nombreAvis: 19,
+        bio: "Mécanicien et électricien auto toutes marques. Diagnostic valise informatique, révision complète moteur et freins."
+      },
+      {
+        id: "demo-4",
+        role: "professionnel",
+        prenom: "Mathieu",
+        nom: "Dossou",
+        metier: "maconnerie",
+        ville: "Porto-Novo",
+        tarifHoraire: 6000,
+        disponible: true,
+        noteMoyenne: 5.0,
+        nombreAvis: 12,
+        bio: "Maçonnerie générale, coffrage, carrelage et rénovation de façades. Travaux soignés et respect scrupuleux des délais."
+      }
+    ];
+
+    // Gestion de l'état de la navbar
+    const u = utilisateurConnecte();
+    const navActions = document.getElementById("navActions");
+
+    if (u) {
+      navActions.innerHTML = `
+        <span style="font-size:0.88rem; font-weight:700; color:var(--texte);">Bonjour, ${u.prenom}</span>
+        <a class="bouton secondaire" href="profil.html" style="min-height:38px; padding:6px 14px; font-size:0.84rem;">Mon profil</a>
+        <button class="bouton secondaire" id="btnNavDeconnexion" style="min-height:38px; padding:6px 14px; font-size:0.84rem;">Déconnexion</button>
+      `;
+      document.getElementById("btnNavDeconnexion").addEventListener("click", deconnecter);
+    } else {
+      navActions.innerHTML = `
+        <a class="bouton secondaire" href="connexion.html" style="min-height:38px; padding:6px 14px; font-size:0.84rem;">Connexion</a>
+        <a class="bouton" href="inscription.html" style="min-height:38px; padding:6px 14px; font-size:0.84rem;">Rejoindre</a>
+      `;
+    }
+
+    // Récupération de tous les professionnels
+    function recupererTousLesArtisans() {
+      const locaux = lireUtilisateurs().filter(x => x.role === "professionnel");
+      const idsLocaux = new Set(locaux.map(x => x.email));
+      const demosFiltrees = ARTISANS_DEMO.filter(x => !idsLocaux.has(x.email));
+      return [...locaux, ...demosFiltrees];
+    }
+
+    function afficherArtisans() {
+      const grille = document.getElementById("grilleArtisans");
+      const texteRecherche = document.getElementById("filtreRecherche").value.trim().toLowerCase();
+      const metierFiltre = document.getElementById("filtreMetier").value;
+
+      const tous = recupererTousLesArtisans();
+      const filtres = tous.filter(a => {
+        const matchTexte = !texteRecherche ||
+          (a.prenom && a.prenom.toLowerCase().includes(texteRecherche)) ||
+          (a.nom && a.nom.toLowerCase().includes(texteRecherche)) ||
+          (a.bio && a.bio.toLowerCase().includes(texteRecherche)) ||
+          (a.ville && a.ville.toLowerCase().includes(texteRecherche));
+
+        const matchMetier = !metierFiltre || a.metier === metierFiltre;
+        return matchTexte && matchMetier;
+      });
+
+      document.getElementById("compteurArtisans").textContent = `${filtres.length} professionnel${filtres.length > 1 ? "s" : ""}`;
+
+      if (filtres.length === 0) {
+        grille.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--texte-doux);">
+            <p style="font-size: 1.1rem; font-weight: 700;">Aucun artisan ne correspond à votre recherche.</p>
+            <p>Essayez avec un autre métier ou un autre mot-clé.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grille.innerHTML = filtres.map(a => {
+        const initiales = ((a.prenom && a.prenom[0]) || "") + ((a.nom && a.nom[0]) || "");
+        const labelMetier = LABELS_METIERS[a.metier] || a.metier || "Artisan";
+        const tarif = a.tarifHoraire ? `${Number(a.tarifHoraire).toLocaleString("fr-FR")} FCFA` : "Sur devis";
+        const note = (typeof a.noteMoyenne === "number") ? a.noteMoyenne.toFixed(1) : "5.0";
+        const nbAvis = a.nombreAvis || 0;
+        const avatarContent = a.photoURL ? `<img src="${a.photoURL}" alt="${a.prenom}">` : initiales;
+
+        return `
+          <article class="carte-artisan">
+            <div class="artisan-header">
+              <div class="artisan-avatar">${avatarContent}</div>
+              <div>
+                <h3 class="artisan-nom">${a.prenom} ${a.nom}</h3>
+                <div class="artisan-localisation">
+                  📍 ${a.ville || "Bénin"}
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 10px;">
+              <span class="badge-role pro" style="margin-top:0;">🛠️ ${labelMetier}</span>
+              <span style="font-size:0.78rem; font-weight:700; color:var(--texte); margin-left:6px;">⭐ ${note} (${nbAvis} avis)</span>
+            </div>
+
+            <p class="artisan-bio">${a.bio || "Professionnel qualifié prêt à intervenir pour vos besoins d'artisanat."}</p>
+
+            <div class="artisan-footer">
+              <div class="artisan-tarif">${tarif} <span>/ base</span></div>
+              <button class="bouton" onclick="demanderService('${a.id}', '${a.prenom} ${a.nom}', '${labelMetier}')" style="width:auto; min-height:36px; padding:6px 14px; font-size:0.84rem;">
+                Demander un service
+              </button>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function demanderService(id, nom, metier) {
+      const destination = `demande.html?pro=${encodeURIComponent(id)}&nom=${encodeURIComponent(nom)}&cat=${encodeURIComponent(metier)}`;
+      if (!utilisateurConnecte()) {
+        if (confirm(`Pour envoyer une demande à ${nom}, vous devez être connecté. Souhaitez-vous vous connecter maintenant ?`)) {
+          window.location.href = `connexion.html?redirect=${encodeURIComponent(destination)}`;
+        }
+        return;
+      }
+      window.location.href = destination;
+    }
+
+    document.getElementById("btnFiltrer").addEventListener("click", afficherArtisans);
+    document.getElementById("filtreMetier").addEventListener("change", afficherArtisans);
+    document.getElementById("filtreRecherche").addEventListener("input", afficherArtisans);
+
+    afficherArtisans();
+  </script>
+</body>
+</html>

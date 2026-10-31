@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inscription — Service Artisans</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="CSS/auth.css">
+</head>
+<body>
+  <main class="carte">
+    <div class="marque">
+      <span class="point"></span>
+      Service Artisans
+    </div>
+
+    <h1>Créer un compte</h1>
+    <p class="sous-titre">Rejoignez la communauté pour trouver un artisan de confiance ou développer votre activité.</p>
+
+    <div id="message" class="message" role="alert"></div>
+
+    <button class="bouton secondaire" id="btnGoogle" type="button">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="margin-right:4px;">
+        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
+        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
+      </svg>
+      Continuer avec Google
+    </button>
+
+    <div class="separateur"><span>ou via formulaire</span></div>
+
+    <form id="formInscription" novalidate>
+      <div class="champ">
+        <label>Votre profil</label>
+        <div class="selecteur-role" id="selecteurRole">
+          <label class="option-role actif" data-role="client">
+            <input type="radio" name="role" value="client" checked>
+            <span class="icone">👤</span>
+            <span class="titre">Client</span>
+            <span class="desc">Je cherche un professionnel</span>
+          </label>
+          <label class="option-role" data-role="professionnel">
+            <input type="radio" name="role" value="professionnel">
+            <span class="icone">🛠️</span>
+            <span class="titre">Artisan / Pro</span>
+            <span class="desc">Je propose mes services</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="ligne">
+        <div class="champ">
+          <label for="prenom">Prénom</label>
+          <input id="prenom" name="prenom" type="text" autocomplete="given-name" placeholder="Ex: Jean" required>
+          <div class="erreur"></div>
+        </div>
+        <div class="champ">
+          <label for="nom">Nom</label>
+          <input id="nom" name="nom" type="text" autocomplete="family-name" placeholder="Ex: Mensah" required>
+          <div class="erreur"></div>
+        </div>
+      </div>
+
+      <div class="champ">
+        <label for="email">Adresse e-mail</label>
+        <input id="email" name="email" type="email" autocomplete="email" placeholder="jean.mensah@exemple.com" required>
+        <div class="erreur"></div>
+      </div>
+
+      <div class="champ">
+        <label for="telephone">Téléphone (WhatsApp)</label>
+        <input id="telephone" name="telephone" type="tel" autocomplete="tel" placeholder="+229 01 97 00 11 22" required>
+        <div class="erreur"></div>
+      </div>
+
+      <!-- Informations spécifiques aux artisans / professionnels -->
+      <div id="sectionPro" style="display: none;">
+        <div class="champ">
+          <label for="metier">Métier principal</label>
+          <select id="metier" name="metier">
+            <option value="">-- Choisissez votre spécialité --</option>
+            <option value="coiffure">Coiffure & Esthétique</option>
+            <option value="plomberie">Plomberie & Sanitaire</option>
+            <option value="mecanique">Mécanique Auto & Moto</option>
+            <option value="maconnerie">Maçonnerie & BTP</option>
+            <option value="electricite">Électricité générale</option>
+            <option value="menuiserie">Menuiserie & Bois</option>
+            <option value="autre">Autre service artisanal</option>
+          </select>
+          <div class="erreur"></div>
+        </div>
+
+        <div class="ligne">
+          <div class="champ">
+            <label for="tarifHoraire">Tarif indicatif (FCFA)</label>
+            <input id="tarifHoraire" name="tarifHoraire" type="number" min="0" step="500" placeholder="Ex: 5000">
+            <div class="erreur"></div>
+          </div>
+          <div class="champ">
+            <label for="villePro">Ville / Commune</label>
+            <input id="villePro" name="villePro" type="text" placeholder="Ex: Cotonou">
+            <div class="erreur"></div>
+          </div>
+        </div>
+
+        <div class="champ">
+          <label for="bio">Quelques mots sur vos prestations</label>
+          <textarea id="bio" name="bio" rows="3" placeholder="Années de pratique, types d'interventions, disponibilité géographique..."></textarea>
+          <div class="erreur"></div>
+        </div>
+      </div>
+
+      <div class="champ">
+        <label for="motDePasse">Mot de passe</label>
+        <div class="groupe-mot-de-passe">
+          <input id="motDePasse" name="motDePasse" type="password" autocomplete="new-password" placeholder="8 caractères min. (chiffre + majuscule)" required>
+          <button type="button" class="btn-toggle-mdp" aria-label="Afficher ou masquer">👁️</button>
+        </div>
+        <div class="force" id="force" data-niveau="0"><span></span><span></span><span></span><span></span></div>
+        <div class="erreur"></div>
+      </div>
+
+      <div class="champ">
+        <label for="confirmation">Confirmer le mot de passe</label>
+        <div class="groupe-mot-de-passe">
+          <input id="confirmation" name="confirmation" type="password" autocomplete="new-password" placeholder="Retapez votre mot de passe" required>
+          <button type="button" class="btn-toggle-mdp" aria-label="Afficher ou masquer">👁️</button>
+        </div>
+        <div class="erreur"></div>
+      </div>
+
+      <button class="bouton" type="submit">Créer mon compte</button>
+    </form>
+
+    <p class="pied">Déjà inscrit ? <a href="connexion.html">Se connecter</a></p>
+  </main>
+
+  <script src="js/validation.js"></script>
+  <script src="js/auth.js"></script>
+  <script type="module" src="js/firebase-auth.js"></script>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const destination = urlParams.get("redirect") || "profil.html";
+
+    const form = document.getElementById("formInscription");
+    const champ = id => document.getElementById(id);
+    const message = document.getElementById("message");
+    const selecteurRole = document.getElementById("selecteurRole");
+    const optionsRole = selecteurRole.querySelectorAll(".option-role");
+    const sectionPro = document.getElementById("sectionPro");
+
+    let roleActif = "client";
+
+    // Gestion du sélecteur de rôle
+    optionsRole.forEach(opt => {
+      opt.addEventListener("click", () => {
+        optionsRole.forEach(o => o.classList.remove("actif"));
+        opt.classList.add("actif");
+        const radio = opt.querySelector('input[type="radio"]');
+        radio.checked = true;
+        roleActif = radio.value;
+
+        sectionPro.style.display = roleActif === "professionnel" ? "block" : "none";
+      });
+    });
+
+    // Toggle oeil pour mot de passe
+    document.querySelectorAll(".btn-toggle-mdp").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const input = btn.previousElementSibling;
+        const estMdp = input.type === "password";
+        input.type = estMdp ? "text" : "password";
+        btn.textContent = estMdp ? "🙈" : "👁️";
+      });
+    });
+
+    const verifications = [
+      lierValidation(champ("prenom"), v => Validation.nom(v)),
+      lierValidation(champ("nom"), v => Validation.nom(v)),
+      lierValidation(champ("email"), Validation.email),
+      lierValidation(champ("telephone"), Validation.telephone),
+      lierValidation(champ("motDePasse"), Validation.motDePasse),
+      lierValidation(champ("confirmation"), v => Validation.confirmation(v, champ("motDePasse").value))
+    ];
+
+    const verifMetier = lierValidation(champ("metier"), v => {
+      return roleActif === "professionnel" ? Validation.obligatoire(v, "Le métier") : "";
+    });
+
+    champ("motDePasse").addEventListener("input", e => {
+      document.getElementById("force").dataset.niveau = e.target.value ? forceMotDePasse(e.target.value) : 0;
+      if (champ("confirmation").value) verifications[5]();
+    });
+
+    form.addEventListener("submit", async e => {
+      e.preventDefault();
+      message.className = "message";
+
+      const listeVerifs = [...verifications];
+      if (roleActif === "professionnel") {
+        listeVerifs.push(verifMetier);
+      }
+
+      const toutValide = listeVerifs.map(v => v()).every(Boolean);
+      if (!toutValide) return;
+
+      const bouton = form.querySelector("button[type='submit']");
+      bouton.disabled = true;
+      bouton.textContent = "Création du compte...";
+
+      const res = await inscrire({
+        role: roleActif,
+        prenom: champ("prenom").value,
+        nom: champ("nom").value,
+        email: champ("email").value,
+        telephone: champ("telephone").value,
+        motDePasse: champ("motDePasse").value,
+        metier: roleActif === "professionnel" ? champ("metier").value : "",
+        ville: roleActif === "professionnel" ? champ("villePro").value : "",
+        bio: roleActif === "professionnel" ? champ("bio").value : "",
+        tarifHoraire: roleActif === "professionnel" ? champ("tarifHoraire").value : ""
+      });
+      bouton.disabled = false;
+      bouton.textContent = "Créer mon compte";
+
+      if (res.ok) {
+        window.location.href = destination;
+      } else {
+        message.textContent = res.erreur;
+        message.className = "message visible echec";
+      }
+    });
+
+    document.getElementById("btnGoogle").addEventListener("click", async () => {
+      message.className = "message";
+      if (!window.connexionGoogle) {
+        message.textContent = "Ouvrez le site via un serveur local (http://localhost…) pour tester la connexion Google.";
+        message.className = "message visible echec";
+        return;
+      }
+      const res = await window.connexionGoogle();
+      if (res.ok) window.location.href = destination;
+      else if (res.erreur) {
+        message.textContent = res.erreur;
+        message.className = "message visible echec";
+      }
+    });
+  </script>
+</body>
+</html>

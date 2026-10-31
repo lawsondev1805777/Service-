@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mon compte — Service Artisans</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="CSS/auth.css">
+</head>
+<body>
+  <main class="carte large">
+    <div class="marque">
+      <span class="point"></span>
+      Service Artisans
+    </div>
+
+    <div class="entete-profil">
+      <div class="avatar-zone" id="avatarZone" title="Cliquez pour changer la photo de profil">
+        <div class="avatar" id="avatar">
+          <span id="avatarTexte">?</span>
+          <img id="avatarImage" src="" alt="Photo de profil" style="display: none;">
+        </div>
+        <div class="avatar-badge-edit">📷</div>
+        <input type="file" id="inputPhoto" accept="image/png, image/jpeg, image/webp" style="display: none;">
+      </div>
+      <div>
+        <h1 id="titreProfil">Mon profil</h1>
+        <p id="membreDepuis"></p>
+        <div id="zoneBadge">
+          <span id="badgeRole" class="badge-role">Client</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tableau de bord statistique du professionnel -->
+    <div id="statsPro" class="stats-pro" style="display: none;">
+      <div class="stat-item">
+        <span class="stat-valeur" id="statNote">⭐ 5.0</span>
+        <span class="stat-label">Note moyenne</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-valeur" id="statAvis">0 avis</span>
+        <span class="stat-label">Évaluations</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-valeur" id="statDispo">🟢 En service</span>
+        <span class="stat-label">Disponibilité</span>
+      </div>
+    </div>
+
+    <div id="message" class="message" role="alert"></div>
+
+    <form id="formProfil" novalidate>
+      <h2>Coordonnées personnelles</h2>
+      <div class="ligne">
+        <div class="champ">
+          <label for="prenom">Prénom</label>
+          <input id="prenom" type="text" autocomplete="given-name">
+          <div class="erreur"></div>
+        </div>
+        <div class="champ">
+          <label for="nom">Nom</label>
+          <input id="nom" type="text" autocomplete="family-name">
+          <div class="erreur"></div>
+        </div>
+      </div>
+
+      <div class="ligne">
+        <div class="champ">
+          <label for="email">Adresse e-mail</label>
+          <input id="email" type="email" autocomplete="email">
+          <div class="erreur"></div>
+        </div>
+        <div class="champ">
+          <label for="telephone">Téléphone (WhatsApp)</label>
+          <input id="telephone" type="tel" autocomplete="tel">
+          <div class="erreur"></div>
+        </div>
+      </div>
+
+      <div class="ligne">
+        <div class="champ">
+          <label for="ville">Ville / Commune</label>
+          <input id="ville" type="text" autocomplete="address-level2" placeholder="Ex: Cotonou">
+          <div class="erreur"></div>
+        </div>
+        <div class="champ">
+          <label for="adresse">Quartier / Adresse</label>
+          <input id="adresse" type="text" autocomplete="street-address" placeholder="Ex: Haie Vive, Rue 340">
+          <div class="erreur"></div>
+        </div>
+      </div>
+
+      <!-- Section réservée aux artisans / pros -->
+      <div id="sectionProfilPro" style="display: none;">
+        <hr>
+        <h2>Prestations & Activité</h2>
+        <div class="ligne">
+          <div class="champ">
+            <label for="metier">Corps de métier</label>
+            <select id="metier">
+              <option value="coiffure">Coiffure & Esthétique</option>
+              <option value="plomberie">Plomberie & Sanitaire</option>
+              <option value="mecanique">Mécanique Auto & Moto</option>
+              <option value="maconnerie">Maçonnerie & BTP</option>
+              <option value="electricite">Électricité générale</option>
+              <option value="menuiserie">Menuiserie & Bois</option>
+              <option value="autre">Autre service artisanal</option>
+            </select>
+            <div class="erreur"></div>
+          </div>
+          <div class="champ">
+            <label for="tarifHoraire">Tarif indicatif de base (FCFA)</label>
+            <input id="tarifHoraire" type="number" min="0" step="500">
+            <div class="erreur"></div>
+          </div>
+        </div>
+
+        <div class="champ">
+          <label for="disponible">Disponibilité pour interventions</label>
+          <select id="disponible">
+            <option value="true">🟢 Actif (Prêt à recevoir des demandes)</option>
+            <option value="false">🔴 Indisponible (Carnet complet / En congé)</option>
+          </select>
+        </div>
+
+        <div class="champ">
+          <label for="bio">Description de vos services</label>
+          <textarea id="bio" rows="3" placeholder="Présentez votre matériel, expérience, zone de déplacement..."></textarea>
+          <div class="erreur"></div>
+        </div>
+      </div>
+
+      <button class="bouton" type="submit">Enregistrer les modifications</button>
+    </form>
+
+    <hr>
+
+    <form id="formMotDePasse" novalidate>
+      <h2>Sécurité & Mot de passe</h2>
+      <div class="champ">
+        <label for="ancien">Mot de passe actuel</label>
+        <div class="groupe-mot-de-passe">
+          <input id="ancien" type="password" autocomplete="current-password" placeholder="Votre mot de passe actuel">
+          <button type="button" class="btn-toggle-mdp" aria-label="Afficher ou masquer">👁️</button>
+        </div>
+        <div class="erreur"></div>
+      </div>
+      <div class="ligne">
+        <div class="champ">
+          <label for="nouveau">Nouveau mot de passe</label>
+          <div class="groupe-mot-de-passe">
+            <input id="nouveau" type="password" autocomplete="new-password" placeholder="8 car. min (1 majuscule + 1 chiffre)">
+            <button type="button" class="btn-toggle-mdp" aria-label="Afficher ou masquer">👁️</button>
+          </div>
+          <div class="erreur"></div>
+        </div>
+        <div class="champ">
+          <label for="confirmation">Confirmer le nouveau mot de passe</label>
+          <div class="groupe-mot-de-passe">
+            <input id="confirmation" type="password" autocomplete="new-password" placeholder="Retapez le nouveau mot de passe">
+            <button type="button" class="btn-toggle-mdp" aria-label="Afficher ou masquer">👁️</button>
+          </div>
+          <div class="erreur"></div>
+        </div>
+      </div>
+      <button class="bouton" type="submit">Mettre à jour mon mot de passe</button>
+    </form>
+
+    <hr>
+    <div class="actions">
+      <a class="bouton secondaire" href="index.html" style="text-align:center;">Retour à l'accueil</a>
+      <button class="bouton secondaire" id="btnDeconnexion" type="button">Se déconnecter</button>
+    </div>
+  </main>
+
+  <script src="js/validation.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    const utilisateur = exigerConnexion();
+    const externe = !!(utilisateur && utilisateur.fournisseur);
+    const champ = id => document.getElementById(id);
+    const message = document.getElementById("message");
+
+    const LABELS_METIERS = {
+      coiffure: "Coiffure & Esthétique",
+      plomberie: "Plomberie & Sanitaire",
+      mecanique: "Mécanique Auto & Moto",
+      maconnerie: "Maçonnerie & BTP",
+      electricite: "Électricité",
+      menuiserie: "Menuiserie",
+      autre: "Artisanat"
+    };
+
+    function afficherMessage(texte, ok) {
+      message.textContent = texte;
+      message.className = "message visible " + (ok ? "reussite" : "echec");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // Toggle oeil pour mot de passe
+    document.querySelectorAll(".btn-toggle-mdp").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const input = btn.previousElementSibling;
+        const estMdp = input.type === "password";
+        input.type = estMdp ? "text" : "password";
+        btn.textContent = estMdp ? "🙈" : "👁️";
+      });
+    });
+
+    function remplir(u) {
+      if (u.photoURL) {
+        champ("avatarImage").src = u.photoURL;
+        champ("avatarImage").style.display = "block";
+        champ("avatarTexte").style.display = "none";
+      } else {
+        champ("avatarTexte").textContent = ((u.prenom && u.prenom[0]) || "") + ((u.nom && u.nom[0]) || "");
+        champ("avatarTexte").style.display = "block";
+        champ("avatarImage").style.display = "none";
+      }
+
+      champ("titreProfil").textContent = `${u.prenom || ""} ${u.nom || ""}`.trim() || "Mon compte";
+      champ("membreDepuis").textContent = "Membre depuis le " + new Date(u.creeLe || Date.now()).toLocaleDateString("fr-FR");
+      ["prenom", "nom", "email", "telephone", "ville", "adresse"].forEach(k => champ(k).value = u[k] || "");
+
+      const isPro = u.role === "professionnel";
+      const badgeRole = champ("badgeRole");
+      const statsPro = document.getElementById("statsPro");
+      const sectionProfilPro = document.getElementById("sectionProfilPro");
+
+      if (isPro) {
+        const nomMetier = LABELS_METIERS[u.metier] || "Artisan / Pro";
+        badgeRole.textContent = `🛠️ ${nomMetier}`;
+        badgeRole.className = "badge-role pro";
+
+        statsPro.style.display = "grid";
+        sectionProfilPro.style.display = "block";
+
+        const note = (typeof u.noteMoyenne === "number") ? u.noteMoyenne.toFixed(1) : "5.0";
+        champ("statNote").textContent = `⭐ ${note}`;
+        champ("statAvis").textContent = `${u.nombreAvis || 0} avis`;
+
+        const dispo = u.disponible !== false;
+        champ("statDispo").textContent = dispo ? "🟢 En service" : "🔴 Indisponible";
+        champ("statDispo").style.color = dispo ? "var(--succes)" : "var(--erreur)";
+
+        champ("metier").value = u.metier || "plomberie";
+        champ("tarifHoraire").value = u.tarifHoraire || "";
+        champ("disponible").value = dispo ? "true" : "false";
+        champ("bio").value = u.bio || "";
+      } else {
+        badgeRole.textContent = "👤 Client";
+        badgeRole.className = "badge-role";
+        statsPro.style.display = "none";
+        sectionProfilPro.style.display = "none";
+      }
+    }
+    remplir(utilisateur);
+
+    // Gestion du changement de photo de profil
+    const avatarZone = document.getElementById("avatarZone");
+    const inputPhoto = document.getElementById("inputPhoto");
+
+    avatarZone.addEventListener("click", () => inputPhoto.click());
+
+    inputPhoto.addEventListener("change", e => {
+      const fichier = e.target.files[0];
+      if (!fichier) return;
+
+      if (!fichier.type.startsWith("image/")) {
+        afficherMessage("Veuillez sélectionner un fichier image valide (JPG, PNG).", false);
+        return;
+      }
+
+      if (fichier.size > 2 * 1024 * 1024) {
+        afficherMessage("L'image est trop volumineuse (taille maximale : 2 Mo).", false);
+        return;
+      }
+
+      const lecteur = new FileReader();
+      lecteur.onload = () => {
+        const photoData = lecteur.result;
+        const res = mettreAJourProfil({ photoURL: photoData });
+        if (res.ok) {
+          remplir(utilisateurConnecte());
+          afficherMessage("Photo de profil mise à jour avec succès !", true);
+        } else {
+          afficherMessage(res.erreur, false);
+        }
+      };
+      lecteur.readAsDataURL(fichier);
+    });
+
+    if (externe) {
+      champ("email").readOnly = true;
+      const formMdp = document.getElementById("formMotDePasse");
+      formMdp.hidden = true;
+      if (formMdp.previousElementSibling) formMdp.previousElementSibling.hidden = true;
+    }
+
+    const verifProfil = [
+      lierValidation(champ("prenom"), Validation.nom),
+      lierValidation(champ("nom"), v => (externe && !v.trim()) ? "" : Validation.nom(v)),
+      lierValidation(champ("email"), Validation.email),
+      lierValidation(champ("telephone"), v => (externe && !v.trim()) ? "" : Validation.telephone(v)),
+      lierValidation(champ("ville"), v => v && Validation.nom(v)),
+      lierValidation(champ("adresse"), () => "")
+    ];
+
+    document.getElementById("formProfil").addEventListener("submit", e => {
+      e.preventDefault();
+      message.className = "message";
+      if (!verifProfil.map(v => v()).every(Boolean)) return;
+
+      const actuel = utilisateurConnecte();
+      const modifications = {
+        prenom: champ("prenom").value.trim(),
+        nom: champ("nom").value.trim(),
+        email: champ("email").value,
+        telephone: champ("telephone").value.trim(),
+        ville: champ("ville").value.trim(),
+        adresse: champ("adresse").value.trim()
+      };
+
+      if (actuel.role === "professionnel") {
+        modifications.metier = champ("metier").value;
+        modifications.tarifHoraire = parseFloat(champ("tarifHoraire").value) || 0;
+        modifications.disponible = champ("disponible").value === "true";
+        modifications.bio = champ("bio").value.trim();
+      }
+
+      const res = mettreAJourProfil(modifications);
+      if (res.ok) {
+        remplir(utilisateurConnecte());
+        afficherMessage("Vos modifications ont été enregistrées.", true);
+      } else {
+        afficherMessage(res.erreur, false);
+      }
+    });
+
+    const verifMdp = [
+      lierValidation(champ("ancien"), v => Validation.obligatoire(v, "L'ancien mot de passe")),
+      lierValidation(champ("nouveau"), Validation.motDePasse),
+      lierValidation(champ("confirmation"), v => Validation.confirmation(v, champ("nouveau").value))
+    ];
+
+    document.getElementById("formMotDePasse").addEventListener("submit", async e => {
+      e.preventDefault();
+      message.className = "message";
+      if (!verifMdp.map(v => v()).every(Boolean)) return;
+      const res = await changerMotDePasse(champ("ancien").value, champ("nouveau").value);
+      if (res.ok) {
+        e.target.reset();
+        e.target.querySelectorAll("input").forEach(i => i.classList.remove("valide", "invalide"));
+        afficherMessage("Votre mot de passe a bien été mis à jour.", true);
+      } else {
+        afficherMessage(res.erreur, false);
+      }
+    });
+
+    document.getElementById("btnDeconnexion").addEventListener("click", deconnecter);
+  </script>
+</body>
+</html>

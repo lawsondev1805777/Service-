@@ -1,0 +1,810 @@
+/* ==========================================================================
+   Plateforme Service Artisans — Authentification & Profil
+   Police : Manrope (Design System moderne & humanisé)
+   ========================================================================== */
+
+:root {
+  --vert: #0f6b45;
+  --vert-fonce: #0b5336;
+  --vert-clair: #e8f4ed;
+  --vert-bordure: #b8dac5;
+  --fond: #f4f6f5;
+  --texte: #15221b;
+  --texte-doux: #5a6e63;
+  --texte-discret: #84998e;
+  --blanc: #ffffff;
+  --bordure: #d8e2dc;
+  --bordure-focus: #0f6b45;
+  --erreur: #d32f2f;
+  --erreur-fond: #fdf2f2;
+  --succes: #0f6b45;
+  --succes-fond: #e8f4ed;
+  --rayon-carte: 20px;
+  --rayon-input: 10px;
+  --police: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --ombre-carte: 0 16px 40px -12px rgba(15, 60, 38, 0.08), 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  background-color: var(--fond);
+  color: var(--texte);
+  font-family: var(--police);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   Conteneur Carte
+   ========================================================================== */
+.carte {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  background: var(--blanc);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-carte);
+  padding: 36px 32px 28px;
+  box-shadow: var(--ombre-carte);
+  animation: apparition .3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.carte.large {
+  max-width: 720px;
+  padding: 40px 38px 32px;
+}
+
+/* ==========================================================================
+   En-tête & Marque
+   ========================================================================== */
+.marque {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 22px;
+  padding: 6px 12px;
+  background: var(--vert-clair);
+  border-radius: 30px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--vert);
+  letter-spacing: -0.01em;
+}
+
+.marque .point {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--vert);
+}
+
+h1 {
+  margin: 0 0 6px;
+  color: var(--texte);
+  font-family: var(--police);
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.2;
+}
+
+.sous-titre {
+  margin: 0 0 24px;
+  color: var(--texte-doux);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   Sélecteur de Rôle (Cartes interactives)
+   ========================================================================== */
+.selecteur-role {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.option-role {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 14px 14px;
+  border: 1.5px solid var(--bordure);
+  border-radius: var(--rayon-input);
+  background: #fbfcfb;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.option-role:hover {
+  border-color: var(--vert-bordure);
+  background: #ffffff;
+}
+
+.option-role input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.option-role.actif,
+.option-role:has(input[type="radio"]:checked) {
+  border-color: var(--vert);
+  background: var(--vert-clair);
+  box-shadow: 0 0 0 1px var(--vert);
+}
+
+.option-role .icone {
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+  line-height: 1;
+}
+
+.option-role .titre {
+  font-weight: 800;
+  font-size: 0.88rem;
+  color: var(--texte);
+  letter-spacing: -0.01em;
+}
+
+.option-role .desc {
+  font-size: 0.74rem;
+  color: var(--texte-doux);
+  margin-top: 3px;
+  line-height: 1.3;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   Formulaires & Champs
+   ========================================================================== */
+.champ {
+  margin-bottom: 16px;
+}
+
+.ligne {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--texte);
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: -0.01em;
+}
+
+input, select, textarea {
+  width: 100%;
+  min-height: 46px;
+  padding: 11px 14px;
+  border: 1.5px solid var(--bordure);
+  border-radius: var(--rayon-input);
+  background: #ffffff;
+  color: var(--texte);
+  font-family: var(--police);
+  font-size: 0.92rem;
+  font-weight: 500;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+textarea {
+  min-height: 80px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--texte-discret);
+  font-weight: 400;
+}
+
+input:hover, select:hover, textarea:hover {
+  border-color: #bccbc2;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--vert);
+  box-shadow: 0 0 0 3px rgba(15, 107, 69, 0.15);
+}
+
+input.invalide, select.invalide, textarea.invalide {
+  border-color: var(--erreur);
+  background: var(--erreur-fond);
+}
+
+input.valide, select.valide, textarea.valide {
+  border-color: var(--succes);
+}
+
+input[readonly] {
+  background: #f4f7f5;
+  color: var(--texte-doux);
+  cursor: not-allowed;
+}
+
+/* Conteneur avec bouton Œil pour mot de passe */
+.groupe-mot-de-passe {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.groupe-mot-de-passe input {
+  padding-right: 44px;
+}
+
+.btn-toggle-mdp {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  color: var(--texte-doux);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: color 0.15s;
+}
+
+.btn-toggle-mdp:hover {
+  color: var(--texte);
+}
+
+.erreur {
+  min-height: 1.1em;
+  margin-top: 4px;
+  color: var(--erreur);
+  font-size: 0.77rem;
+  font-weight: 600;
+}
+
+/* Jauge de force */
+.force {
+  display: flex;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.force span {
+  flex: 1;
+  height: 4px;
+  border-radius: 4px;
+  background: var(--bordure);
+  transition: background 0.2s ease;
+}
+
+.force[data-niveau="1"] span:nth-child(-n+1) { background: #ef4444; }
+.force[data-niveau="2"] span:nth-child(-n+2) { background: #f59e0b; }
+.force[data-niveau="3"] span:nth-child(-n+3) { background: #84cc16; }
+.force[data-niveau="4"] span:nth-child(-n+4) { background: var(--succes); }
+
+/* ==========================================================================
+   Boutons
+   ========================================================================== */
+.bouton {
+  width: 100%;
+  min-height: 47px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border: 1px solid transparent;
+  border-radius: var(--rayon-input);
+  background: var(--vert);
+  color: var(--blanc);
+  font-family: var(--police);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .15s ease, transform .15s ease, box-shadow .15s ease;
+}
+
+.bouton:hover {
+  background: var(--vert-fonce);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(15, 107, 69, 0.2);
+}
+
+.bouton:active {
+  transform: translateY(0);
+}
+
+.bouton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.bouton.secondaire {
+  background: var(--blanc);
+  color: var(--texte);
+  border-color: var(--bordure);
+  box-shadow: none;
+}
+
+.bouton.secondaire:hover {
+  background: #f8faf9;
+  border-color: #bccbc2;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+/* ==========================================================================
+   Alertes & Notifications
+   ========================================================================== */
+.message {
+  display: none;
+  padding: 12px 14px;
+  border-radius: var(--rayon-input);
+  margin-bottom: 18px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.message.visible {
+  display: block;
+}
+
+.message.echec {
+  background: var(--erreur-fond);
+  color: var(--erreur);
+  border: 1px solid #fecaca;
+}
+
+.message.reussite {
+  background: var(--succes-fond);
+  color: var(--succes);
+  border: 1px solid var(--vert-bordure);
+}
+
+/* ==========================================================================
+   Séparateurs & Pied
+   ========================================================================== */
+.separateur {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0;
+  color: var(--texte-discret);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.separateur::before, .separateur::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--bordure);
+}
+
+.pied {
+  margin: 20px 0 0;
+  text-align: center;
+  color: var(--texte-doux);
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.pied a {
+  color: var(--vert);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.pied a:hover {
+  text-decoration: underline;
+}
+
+.options-connexion {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
+.options-connexion a {
+  color: var(--texte-doux);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.options-connexion a:hover {
+  color: var(--vert);
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   Page Profil & En-tête
+   ========================================================================== */
+.entete-profil {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.avatar-zone {
+  position: relative;
+  flex: 0 0 68px;
+  width: 68px;
+  height: 68px;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  background: var(--vert);
+  color: var(--blanc);
+  display: grid;
+  place-items: center;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  overflow: hidden;
+  border: 2px solid var(--vert-bordure);
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-badge-edit {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  background: var(--blanc);
+  border: 1.5px solid var(--bordure);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  font-size: 0.75rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.avatar-zone:hover .avatar-badge-edit {
+  transform: scale(1.12);
+  background: var(--vert-clair);
+}
+
+.entete-profil h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.entete-profil p {
+  margin: 3px 0 0;
+  color: var(--texte-doux);
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.badge-role {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: var(--vert-clair);
+  color: var(--vert);
+  margin-top: 6px;
+}
+
+.badge-role.pro {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+/* Grille de stats pro */
+.stats-pro {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  background: #f8faf9;
+  padding: 14px 16px;
+  border-radius: var(--rayon-input);
+  border: 1px solid var(--bordure);
+  margin-bottom: 22px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-valeur {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--vert);
+  letter-spacing: -0.02em;
+}
+
+.stat-label {
+  font-size: 0.72rem;
+  color: var(--texte-doux);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--bordure);
+  margin: 24px 0;
+}
+
+h2 {
+  margin: 0 0 16px;
+  color: var(--texte);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.actions > * {
+  flex: 1;
+}
+
+/* ==========================================================================
+   Animations & Responsive
+   ========================================================================== */
+@keyframes apparition {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 560px) {
+  body {
+    padding: 16px 12px;
+    align-items: flex-start;
+  }
+  .carte, .carte.large {
+    padding: 26px 20px 22px;
+    border-radius: 16px;
+  }
+  .ligne, .selecteur-role, .stats-pro {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .actions {
+    flex-direction: column;
+  }
+}
+
+/* ==========================================================================
+   Page d'accueil & Vitrine Artisans
+   ========================================================================== */
+.page-accueil {
+  display: block;
+  padding: 0;
+  background: var(--fond);
+}
+
+.nav-principale {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background: var(--blanc);
+  border-bottom: 1px solid var(--bordure);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.nav-marque {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--texte);
+  text-decoration: none;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.conteneur-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+}
+
+.hero-accueil {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.hero-accueil h1 {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  letter-spacing: -0.04em;
+  margin-bottom: 12px;
+}
+
+.hero-accueil p {
+  color: var(--texte-doux);
+  font-size: 1.05rem;
+  max-width: 620px;
+  margin: 0 auto 30px;
+  line-height: 1.6;
+}
+
+.barre-recherche-accueil {
+  background: var(--blanc);
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid var(--bordure);
+  box-shadow: 0 10px 30px -10px rgba(15, 60, 38, 0.08);
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1fr;
+  gap: 10px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.grille-artisans {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 20px;
+  margin-top: 32px;
+}
+
+.carte-artisan {
+  background: var(--blanc);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-carte);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.carte-artisan:hover {
+  transform: translateY(-3px);
+  border-color: var(--vert-bordure);
+  box-shadow: 0 12px 28px -10px rgba(15, 60, 38, 0.12);
+}
+
+.artisan-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.artisan-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--vert);
+  color: var(--blanc);
+  display: grid;
+  place-items: center;
+  font-size: 1.15rem;
+  font-weight: 800;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.artisan-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.artisan-nom {
+  font-size: 1.05rem;
+  font-weight: 800;
+  margin: 0 0 4px;
+  color: var(--texte);
+}
+
+.artisan-localisation {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: var(--texte-doux);
+  font-weight: 500;
+}
+
+.artisan-bio {
+  font-size: 0.86rem;
+  color: var(--texte-doux);
+  line-height: 1.5;
+  margin: 0 0 18px;
+  flex-grow: 1;
+}
+
+.artisan-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 14px;
+  border-top: 1px solid var(--bordure);
+}
+
+.artisan-tarif {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--vert);
+}
+
+.artisan-tarif span {
+  font-size: 0.74rem;
+  color: var(--texte-doux);
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .barre-recherche-accueil {
+    grid-template-columns: 1fr;
+  }
+  .nav-principale {
+    padding: 14px 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demander un service — DevMind Services +</title>
+  <link rel="stylesheet" href="css/membre4.css">
+</head>
+<body>
+  <header class="topbar" id="topbar"></header>
+
+  <main class="page">
+    <h2>Demander un service</h2>
+    <div id="alerte" class="alerte" hidden></div>
+
+    <form id="form" class="carte" novalidate>
+      <label for="pro">Professionnel</label>
+      <input id="pro" type="text" readonly>
+
+      <label for="categorie">Catégorie</label>
+      <select id="categorie" required>
+        <option value="">— Choisir —</option>
+      </select>
+      <div class="erreur" data-for="categorie"></div>
+
+      <label for="titre">Titre de la demande</label>
+      <input id="titre" type="text" maxlength="80" placeholder="Ex. : Fuite sous l'évier" required>
+      <div class="erreur" data-for="titre"></div>
+
+      <label for="description">Description</label>
+      <textarea id="description" maxlength="1000" placeholder="Décrivez votre besoin en détail…" required></textarea>
+      <div class="erreur" data-for="description"></div>
+
+      <label for="adresse">Adresse / quartier</label>
+      <input id="adresse" type="text" maxlength="120" required>
+      <div class="erreur" data-for="adresse"></div>
+
+      <div class="row">
+        <div>
+          <label for="date">Date souhaitée</label>
+          <input id="date" type="date" required>
+          <div class="erreur" data-for="date"></div>
+        </div>
+        <div>
+          <label for="urgence">Urgence</label>
+          <select id="urgence">
+            <option value="normale">Normale</option>
+            <option value="urgente">Urgente</option>
+          </select>
+        </div>
+      </div>
+
+      <label for="budget">Budget indicatif (FCFA, facultatif)</label>
+      <input id="budget" type="number" min="0" step="500">
+
+      <p style="margin-top:1.2rem"><button class="bouton" id="envoyer" type="submit">Envoyer la demande</button></p>
+    </form>
+  </main>
+
+  <nav class="tabbar" id="tabbar"></nav>
+  <script type="module" src="js/demandes.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Suivi des demandes — DevMind Services +</title>
+  <link rel="stylesheet" href="css/membre4.css">
+</head>
+<body>
+  <header class="topbar" id="topbar"></header>
+
+  <main class="page">
+    <h2>Suivi des demandes</h2>
+
+    <div class="onglets" id="vue">
+      <button data-vue="client" class="actif">Mes demandes</button>
+      <button data-vue="pro">Demandes reçues</button>
+    </div>
+    <div class="onglets" id="filtre">
+      <button data-f="tous" class="actif">Toutes</button>
+      <button data-f="en_attente">En attente</button>
+      <button data-f="acceptee">Acceptées</button>
+      <button data-f="en_cours">En cours</button>
+      <button data-f="terminee">Terminées</button>
+    </div>
+
+    <div id="liste"></div>
+  </main>
+
+  <nav class="tabbar" id="tabbar"></nav>
+  <script type="module" src="js/suivi.js"></script>
+</body>
+</html>

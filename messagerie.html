@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Messagerie — DevMind Services +</title>
+  <link rel="stylesheet" href="css/membre4.css">
+</head>
+<body>
+  <header class="topbar" id="topbar"></header>
+
+  <div class="chat-app" id="app">
+    <aside class="conv-liste" id="convs"></aside>
+
+    <section class="chat">
+      <div id="chat-vide" class="chat-vide">Choisissez une conversation pour discuter.</div>
+      <div id="chat-zone" hidden style="display:none;flex-direction:column;height:100%">
+        <div class="chat-head">
+          <button class="retour" id="retour" aria-label="Retour">‹</button>
+          <div class="avatar" id="ch-av"></div>
+          <div><b id="ch-nom"></b><small id="ch-sujet"></small></div>
+        </div>
+        <div class="messages" id="messages"></div>
+        <form class="saisie" id="saisie" autocomplete="off">
+          <input id="texte" type="text" maxlength="1000" placeholder="Écrire un message…">
+          <button class="bouton" type="submit" aria-label="Envoyer">➤</button>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <nav class="tabbar" id="tabbar"></nav>
+  <script type="module" src="js/messagerie.js"></script>
+</body>
+</html>
